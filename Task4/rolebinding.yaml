@@ -1,0 +1,123 @@
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: secret-manager-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: secret-manager
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: ivan
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-manager-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-manager
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: mike
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: secret-viewer-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: secret-viewer
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: mike
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: cluster-viewer-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-viewer
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: phillip
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developer-binding
+  namespace: dev
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: developer
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: david
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: developer-binding
+  namespace: staging
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: developer
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: david
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: prod-viewer-binding
+  namespace: prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prod-viewer
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: olga
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: prod-manager-binding
+  namespace: prod
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prod-manager
+subjects:
+  - kind: User
+    apiGroup: rbac.authorization.k8s.io
+    name: olga
