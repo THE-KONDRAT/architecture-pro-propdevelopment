@@ -1,0 +1,28 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: k8spsprunasnonroot
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sPSPRunasNonRoot
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8spsprunasnonroot
+        violation[{"msg": msg}] {
+          c := input_containers[_]
+          not is_nonroot(c)
+          msg := sprintf("Container '%v' may run as root (runAsNonRoot: true is required)", [c.name])
+        }
+        is_nonroot(c) { c.securityContext.runAsNonRoot == true }
+        is_nonroot(c) {
+          not has_runasuser(c)
+          pod_is_nonroot
+        }
+        pod_is_nonroot { input.review.object.spec.securityContext.runAsNonRoot == true }
+        has_runasuser(c) { c.securityContext.runAsUser }
+        input_containers[c] { c := input.review.object.spec.containers[_] }
+        input_containers[c] { c := input.review.object.spec.initContainers[_] }
+        input_containers[c] { c := input.review.object.spec.ephemeralContainers[_] }
